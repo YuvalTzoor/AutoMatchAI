@@ -1,0 +1,9 @@
+.header {
+   background-color: #D6DAC8;
+  padding: 20px;
+  text-align: center;
+}
+
+.header img {
+  max-width: 100px; /* Adjust as needed */
+}

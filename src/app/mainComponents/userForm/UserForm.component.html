@@ -1,0 +1,71 @@
+<mat-card class="UserForm-card">
+	<mat-card-content>
+		<p>
+			ברוך הבא למחולל הקישורים של יד2! כדי להשיג את הקישור המתאים לחיפוש הרכב
+			שלך, עקוב אחר השלבים הבאים:
+			<br />
+
+			1. הזן פרטים: תחילה, הכנס את פרטי הרכב הרצויים. למשל, סוג הרכב, מותג, שנת
+			יצור, וטווח המחיר שברצונך לחפש בו.
+
+			<br />
+
+			2. בחירת מותגי רכב: ניתן לבחור עד ארבעה מותגים שונים לחיפוש. אם תבחר יותר
+			מארבעה, המערכת תודיע לך כי המקסימום הוא ארבעה.
+
+			<br />
+
+			3. אימות פרטים: המערכת תבדוק שהשנה שהזנת הגיונית, ושהפרטים אחרים שהזנת
+			תקפים.
+
+			<br />
+
+			4. קבלת הקישור: לאחר שכל הפרטים אומתו, המערכת תייצר את הקישור לחיפוש שלך
+			ותציג אותו בפניך.
+
+			<br />
+
+			דוגמה לשימוש נכון: אם אתה מחפש רכב מותג טויוטה או רנו, משפחתי או יוקרתי,
+			במחיר של עד 100,000 ש״ח לשנים 2015-2016, הכנס את הפרטים הללו והמתן כמה
+			שניות. המערכת תייצר לך קישור מסוג:
+			https://www.yad2.co.il/vehicles/cars?carFamilyType=2,1&manufacturer=19,51&year=2015-2016&price=-1-100000
+			<br />
+			<br />
+			עקוב אחר ההוראות הללו כדי להבטיח שהשימוש במחולל הקישורים יהיה נוח ומהיר
+			עבורך!
+			<br />
+			<br />
+		</p>
+		<form (submit)="onSendPrompt(promptForm)" #promptForm="ngForm">
+			<mat-form-field appearance="fill">
+				<mat-label>תיאור סוג הרכב אותו אתה מחפש</mat-label>
+				<input
+					matInput
+					type="text"
+					name="UserPrompt"
+					minlength="1"
+					maxlength="2000"
+					[ngModel]="UserPrompt"
+					#name="ngModel"
+				/>
+			</mat-form-field>
+			<button mat-raised-button color="primary" type="submit">
+				צור קישור!
+			</button>
+		</form>
+		<mat-card>
+			<mat-progress-bar
+				*ngIf="IsLoading"
+				mode="indeterminate"
+			></mat-progress-bar>
+			<mat-card-content *ngIf="!IsLoading">
+				הלינק המבוקש:
+
+				<div *ngIf="startsWithHttps(GptResponse); else textContent">
+					<a href="{{ GptResponse }}" target="_blank">{{ GptResponse }}</a>
+				</div>
+				<ng-template #textContent>{{ GptResponse }}</ng-template>
+			</mat-card-content>
+		</mat-card>
+	</mat-card-content>
+</mat-card>

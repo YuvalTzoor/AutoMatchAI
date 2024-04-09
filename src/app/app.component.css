@@ -1,0 +1,6 @@
+.main-wrapper {
+  position: relative; /* This makes sure that the absolute positioning of the content card is relative to this container */
+  height: 100vh; /* full viewport height */
+  background-color: #EFBC9B;
+}
+
