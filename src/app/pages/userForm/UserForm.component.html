@@ -1,67 +1,57 @@
 <mat-card class="UserForm-card mat-elevation-z8">
   <mat-card-content class="form-scroll-container">
-    <form (submit)="onSave()" #userForm="ngForm" class="user-form">
+    <form (submit)="onSave()" [formGroup]="userForm" class="user-form">
       <!-- Grouping first name and gender fields -->
       <div class="control-group">
         <mat-form-field>
           <mat-label>First Name</mat-label>
-          <input
-            matInput
-            type="text"
-            name="firstName"
-            minlength="1"
-            maxlength="20"
-            [(ngModel)]="user.firstName"
-            #firstName="ngModel"
-            required
-          />
+          <input matInput type="text" formControlName="firstName" required />
           <mat-error
-            *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+            *ngIf="
+              userForm.get('firstName')?.invalid &&
+              (userForm.get('firstName')?.dirty ||
+                userForm.get('firstName')?.touched)
+            "
           >
-            <span *ngIf="firstName.errors?.['required']"
+            <span *ngIf="userForm.get('firstName')?.errors?.['required']"
               >First name is required.</span
             >
-            <span *ngIf="firstName.errors?.['minlength']"
+            <span *ngIf="userForm.get('firstName')?.errors?.['minlength']"
               >First name must be at least 1 character long.</span
             >
-            <span *ngIf="firstName.errors?.['maxlength']"
+            <span *ngIf="userForm.get('firstName')?.errors?.['maxlength']"
               >First name cannot be more than 20 characters long.</span
             >
           </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Last Name</mat-label>
-          <input
-            matInput
-            type="text"
-            name="lastName"
-            minlength="1"
-            maxlength="20"
-            [(ngModel)]="user.lastName"
-            #lastName="ngModel"
-            required
-          />
+          <input matInput type="text" formControlName="lastName" required />
           <mat-error
-            *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+            *ngIf="
+              userForm.get('lastName')?.invalid &&
+              (userForm.get('lastName')?.dirty ||
+                userForm.get('lastName')?.touched)
+            "
           >
-            <span *ngIf="lastName.errors?.['required']"
+            <span *ngIf="userForm.get('lastName')?.errors?.['required']"
               >Last name is required.</span
             >
-            <span *ngIf="lastName.errors?.['minlength']"
+            <span *ngIf="userForm.get('lastName')?.errors?.['minlength']"
               >Last name must be at least 1 character long.</span
             >
-            <span *ngIf="lastName.errors?.['maxlength']"
+            <span *ngIf="userForm.get('lastName')?.errors?.['maxlength']"
               >Last name cannot be more than 20 characters long.</span
             >
           </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Gender</mat-label>
-          <mat-select name="gender" [(ngModel)]="user.gender" required>
+          <mat-select formControlName="gender" required>
             <mat-option value="male">Male</mat-option>
             <mat-option value="female">Female</mat-option>
           </mat-select>
-          <mat-error *ngIf="userForm.controls['gender']?.invalid"
+          <mat-error *ngIf="userForm.get('gender')?.invalid"
             >Gender is required.</mat-error
           >
         </mat-form-field>
@@ -69,51 +59,35 @@
       <!-- Email field -->
       <mat-form-field>
         <mat-label>Email</mat-label>
-        <input
-          matInput
-          type="email"
-          name="email"
-          [(ngModel)]="user.email"
-          minlength="1"
-          maxlength="100"
-          required
-          email
-        />
+        <input matInput type="email" formControlName="email" required email />
         <mat-error
           *ngIf="
-            userForm.controls['email']?.invalid &&
-            (userForm.controls['email']?.dirty ||
-              userForm.controls['email']?.touched)
+            userForm.get('email')?.invalid &&
+            (userForm.get('email')?.dirty || userForm.get('email')?.touched)
           "
         >
-          <span *ngIf="userForm.controls['email']?.errors?.['required']"
+          <span *ngIf="userForm.get('email')?.errors?.['required']"
             >Email is required.</span
           >
-          <span *ngIf="userForm.controls['email']?.errors?.['email']"
+          <span *ngIf="userForm.get('email')?.errors?.['email']"
             >Please enter a valid email.</span
           >
-          <span *ngIf="userForm.controls['email']?.errors?.['minlength']"
+          <span *ngIf="userForm.get('email')?.errors?.['minlength']"
             >Email must be at least 1 character long.</span
           >
-          <span *ngIf="userForm.controls['email']?.errors?.['maxlength']"
+          <span *ngIf="userForm.get('email')?.errors?.['maxlength']"
             >Email cannot be more than 100 characters long.</span
           >
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Choose a date</mat-label>
+        <mat-label>Birthday</mat-label>
         <input
           matInput
           [max]="maxDate"
           [matDatepicker]="picker"
-          name="birthday"
-          [(ngModel)]="user.birthday"
+          formControlName="birthday"
           required
-          #birthday="ngModel"
-          [ngClass]="{
-            'is-invalid':
-              birthday.invalid && (birthday.dirty || birthday.touched)
-          }"
         />
         <mat-datepicker-toggle
           matIconSuffix
@@ -121,12 +95,16 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #picker touchUi></mat-datepicker>
         <mat-error
-          *ngIf="birthday.invalid && (birthday.dirty || birthday.touched)"
+          *ngIf="
+            userForm.get('birthday')?.invalid &&
+            (userForm.get('birthday')?.dirty ||
+              userForm.get('birthday')?.touched)
+          "
         >
-          <span *ngIf="birthday.errors?.['required']"
+          <span *ngIf="userForm.get('birthday')?.errors?.['required']"
             >Birthday is required.</span
           >
-          <span *ngIf="birthday.errors?.['invalidDate']"
+          <span *ngIf="userForm.get('birthday')?.errors?.['invalidDate']"
             >Birthday cannot be a future date.</span
           >
         </mat-error>
@@ -136,29 +114,21 @@
       <div class="control-group">
         <mat-form-field>
           <mat-label>Address</mat-label>
-          <input
-            matInput
-            type="text"
-            name="address"
-            [(ngModel)]="user.address"
-            minlength="1"
-            maxlength="200"
-            required
-          />
+          <input matInput type="text" formControlName="address" required />
           <mat-error
             *ngIf="
-              userForm.controls['address']?.invalid &&
-              (userForm.controls['address']?.dirty ||
-                userForm.controls['address']?.touched)
+              userForm.get('address')?.invalid &&
+              (userForm.get('address')?.dirty ||
+                userForm.get('address')?.touched)
             "
           >
-            <span *ngIf="userForm.controls['address']?.errors?.['required']"
+            <span *ngIf="userForm.get('address')?.errors?.['required']"
               >Address is required.</span
             >
-            <span *ngIf="userForm.controls['address']?.errors?.['minlength']"
+            <span *ngIf="userForm.get('address')?.errors?.['minlength']"
               >Address must be at least 1 character long.</span
             >
-            <span *ngIf="userForm.controls['address']?.errors?.['maxlength']"
+            <span *ngIf="userForm.get('address')?.errors?.['maxlength']"
               >Address cannot be more than 200 characters long.</span
             >
           </mat-error>
@@ -166,29 +136,20 @@
 
         <mat-form-field>
           <mat-label>City</mat-label>
-          <input
-            matInput
-            type="text"
-            name="city"
-            [(ngModel)]="user.city"
-            minlength="1"
-            maxlength="200"
-            required
-          />
+          <input matInput type="text" formControlName="city" required />
           <mat-error
             *ngIf="
-              userForm.controls['city']?.invalid &&
-              (userForm.controls['city']?.dirty ||
-                userForm.controls['city']?.touched)
+              userForm.get('city')?.invalid &&
+              (userForm.get('city')?.dirty || userForm.get('city')?.touched)
             "
           >
-            <span *ngIf="userForm.controls['city']?.errors?.['required']"
+            <span *ngIf="userForm.get('city')?.errors?.['required']"
               >City is required.</span
             >
-            <span *ngIf="userForm.controls['city']?.errors?.['minlength']"
+            <span *ngIf="userForm.get('city')?.errors?.['minlength']"
               >City must be at least 1 character long.</span
             >
-            <span *ngIf="userForm.controls['city']?.errors?.['maxlength']"
+            <span *ngIf="userForm.get('city')?.errors?.['maxlength']"
               >City cannot be more than 200 characters long.</span
             >
           </mat-error>
@@ -196,29 +157,21 @@
 
         <mat-form-field>
           <mat-label>Country</mat-label>
-          <input
-            matInput
-            type="text"
-            name="country"
-            [(ngModel)]="user.country"
-            minlength="1"
-            maxlength="200"
-            required
-          />
+          <input matInput type="text" formControlName="country" required />
           <mat-error
             *ngIf="
-              userForm.controls['country']?.invalid &&
-              (userForm.controls['country']?.dirty ||
-                userForm.controls['country']?.touched)
+              userForm.get('country')?.invalid &&
+              (userForm.get('country')?.dirty ||
+                userForm.get('country')?.touched)
             "
           >
-            <span *ngIf="userForm.controls['country']?.errors?.['required']"
+            <span *ngIf="userForm.get('country')?.errors?.['required']"
               >Country is required.</span
             >
-            <span *ngIf="userForm.controls['country']?.errors?.['minlength']"
+            <span *ngIf="userForm.get('country')?.errors?.['minlength']"
               >Country must be at least 1 character long.</span
             >
-            <span *ngIf="userForm.controls['country']?.errors?.['maxlength']"
+            <span *ngIf="userForm.get('country')?.errors?.['maxlength']"
               >Country cannot be more than 200 characters long.</span
             >
           </mat-error>
@@ -228,29 +181,20 @@
       <!-- Remaining fields -->
       <mat-form-field>
         <mat-label>List of hobbies (can also be more than one)</mat-label>
-        <input
-          matInput
-          type="text"
-          name="hobbies"
-          [(ngModel)]="user.hobbies"
-          minlength="1"
-          maxlength="200"
-          required
-        />
+        <input matInput type="text" formControlName="hobbies" required />
         <mat-error
           *ngIf="
-            userForm.controls['hobbies']?.invalid &&
-            (userForm.controls['hobbies']?.dirty ||
-              userForm.controls['hobbies']?.touched)
+            userForm.get('hobbies')?.invalid &&
+            (userForm.get('hobbies')?.dirty || userForm.get('hobbies')?.touched)
           "
         >
-          <span *ngIf="userForm.controls['hobbies']?.errors?.['required']"
+          <span *ngIf="userForm.get('hobbies')?.errors?.['required']"
             >Hobbies are required.</span
           >
-          <span *ngIf="userForm.controls['hobbies']?.errors?.['minlength']"
+          <span *ngIf="userForm.get('hobbies')?.errors?.['minlength']"
             >Hobbies must be at least 1 character long.</span
           >
-          <span *ngIf="userForm.controls['hobbies']?.errors?.['maxlength']"
+          <span *ngIf="userForm.get('hobbies')?.errors?.['maxlength']"
             >Hobbies cannot be more than 200 characters long.</span
           >
         </mat-error>
@@ -261,11 +205,11 @@
         <input
           matInput
           type="color"
-          name="favoriteColor"
-          [(ngModel)]="user.favoriteColor"
+          formControlName="favoriteColor"
           required
+          [value]="defaultColor"
         />
-        <mat-error *ngIf="userForm.controls['favoriteColor']?.invalid"
+        <mat-error *ngIf="userForm.get('favoriteColor')?.invalid"
           >Favorite color is required.</mat-error
         >
       </mat-form-field>
@@ -275,26 +219,24 @@
         <input
           matInput
           type="number"
-          name="seats"
-          [(ngModel)]="user.seats"
+          formControlName="seats"
           min="2"
           max="7"
           required
         />
         <mat-error
           *ngIf="
-            userForm.controls['seats']?.invalid &&
-            (userForm.controls['seats']?.dirty ||
-              userForm.controls['seats']?.touched)
+            userForm.get('seats')?.invalid &&
+            (userForm.get('seats')?.dirty || userForm.get('seats')?.touched)
           "
         >
-          <span *ngIf="userForm.controls['seats']?.errors?.['required']"
+          <span *ngIf="userForm.get('seats')?.errors?.['required']"
             >Number of seats is required.</span
           >
-          <span *ngIf="userForm.controls['seats']?.errors?.['min']"
+          <span *ngIf="userForm.get('seats')?.errors?.['min']"
             >Number of seats must be at least 2.</span
           >
-          <span *ngIf="userForm.controls['seats']?.errors?.['max']"
+          <span *ngIf="userForm.get('seats')?.errors?.['max']"
             >Number of seats cannot be more than 7.</span
           >
         </mat-error>
@@ -302,11 +244,11 @@
 
       <mat-form-field>
         <mat-label>Motor type (electric, fuel)</mat-label>
-        <mat-select name="motorType" [(ngModel)]="user.motorType" required>
+        <mat-select formControlName="motorType" required>
           <mat-option value="electric">Electric</mat-option>
           <mat-option value="fuel">Fuel</mat-option>
         </mat-select>
-        <mat-error *ngIf="userForm.controls['motorType']?.invalid"
+        <mat-error *ngIf="userForm.get('motorType')?.invalid"
           >Motor type is required.</mat-error
         >
       </mat-form-field>

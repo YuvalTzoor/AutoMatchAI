@@ -7,7 +7,7 @@ export interface User {
   address: string;
   city: string;
   country: string;
-  hobbies: string;
+  hobbies: string[];
   favoriteColor: string;
   seats: string;
   motorType: string;
