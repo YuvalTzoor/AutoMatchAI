@@ -1,9 +1,6 @@
 .mat-toolbar {
   position: fixed;
-  bottom: 0;
+  bottom: 0 ;
   width: 100%;
-}
-
-.spacer {
-  flex: 1 1 auto;
+  padding: 1rem;
 }
