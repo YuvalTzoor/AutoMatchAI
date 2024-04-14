@@ -12,16 +12,18 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../../interfaces/user';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { UserService } from 'src/app/services/user.service';
 
 // Custom validator function
 function dateValidator(control: AbstractControl): ValidationErrors | null {
   const selectedDate = control.value;
   const currentDate = new Date();
+  const userService = new UserService();
 
   if (selectedDate && !isNaN(Date.parse(selectedDate))) {
     const parsedSelectedDate = new Date(selectedDate);
@@ -46,6 +48,7 @@ export class UserFormComponent implements OnInit {
   maxDate: Date;
   userForm: FormGroup;
   defaultColor: string = '#000000';
+
   // user: User = {
   //   firstName: '',
   //   lastName: '',
@@ -108,7 +111,8 @@ export class UserFormComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.maxDate = new Date();
     this.userForm = this.formBuilder.group({
@@ -202,7 +206,11 @@ export class UserFormComponent implements OnInit {
   //     return filteredSelected;
   //   }
   // }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   onSave() {
     console.log('Form submitted');
     console.log('Form validity:', this.userForm.valid);
@@ -217,12 +225,18 @@ export class UserFormComponent implements OnInit {
       let users = JSON.parse(localStorage.getItem('users') || '[]');
       users.push(this.user);
       localStorage.setItem('users', JSON.stringify(users));
-
     } else {
       console.log('Form is invalid');
       // Mark all form controls as touched to trigger validation messages
       this.markFormGroupTouched(this.userForm);
     }
+    const x = UserService.getUsers().subscribe((users) => {
+      console.log('Users:', users);
+    });
+    this.openSnackBar(
+      'User saved successfully and a confirmation Email will sent to you soon!',
+      'Close'
+    );
   }
 
   markFormGroupTouched(formGroup: FormGroup) {

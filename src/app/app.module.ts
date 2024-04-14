@@ -15,11 +15,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HeaderComponent } from './components/header/header.component';
 import { UserFormComponent } from './pages/userForm/UserForm.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { AnalyticsComponent } from './pages/analytics/analytics.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +32,8 @@ import { MatChipsModule } from '@angular/material/chips';
     HeaderComponent,
     UserFormComponent,
     FooterComponent,
+    AnalyticsComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +55,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatNativeDateModule,
     MatIconModule,
     MatChipsModule,
+    MatSnackBarModule,
+    MatSidenavModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
