@@ -46,20 +46,35 @@ export class UserFormComponent implements OnInit {
   maxDate: Date;
   userForm: FormGroup;
   defaultColor: string = '#000000';
+  // user: User = {
+  //   firstName: '',
+  //   lastName: '',
+  //   gender: '',
+  //   email: '',
+  //   birthday: '',
+  //   address: '',
+  //   city: '',
+  //   country: '',
+  //   hobbies: [],
+  //   favoriteColor: this.defaultColor,
+  //   seats: '',
+  //   motorType: '',
+  // };
   user: User = {
-    firstName: '',
-    lastName: '',
-    gender: '',
-    email: '',
-    birthday: '',
-    address: '',
-    city: '',
-    country: '',
-    hobbies: [],
-    favoriteColor: this.defaultColor,
-    seats: '',
-    motorType: '',
+    firstName: 'John',
+    lastName: 'Doe',
+    gender: 'male',
+    email: 'john.doe@example.com',
+    birthday: new Date('1990-05-15') as unknown as string,
+    address: '123 Main St',
+    city: 'New York',
+    country: 'USA',
+    hobbies: ['reading', 'painting', 'hiking'],
+    favoriteColor: this.defaultColor, // Assuming defaultColor is '#000000' (black)
+    seats: '4',
+    motorType: 'electric',
   };
+
   hobbies: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   //keywords = [''];
@@ -159,7 +174,7 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Component initialization logic
+    //will add demo data to the form
   }
 
   // selected(
@@ -198,6 +213,11 @@ export class UserFormComponent implements OnInit {
       // Update the user object with the form values
       this.user = this.userForm.value;
       console.log('Saving user:', this.user);
+      //will save the user to the local storage in users key
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      users.push(this.user);
+      localStorage.setItem('users', JSON.stringify(users));
+
     } else {
       console.log('Form is invalid');
       // Mark all form controls as touched to trigger validation messages
