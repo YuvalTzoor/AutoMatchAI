@@ -1,40 +1,19 @@
-import { Component } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { User } from '../../interfaces/user';
-import { UserService } from 'src/app/services/user.service';
-import { OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { ChartType } from 'angular-google-charts'; // Ensure this is the correct path
 
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.css'],
 })
-export class AnalyticsComponent {
-  users: User[] = [];
-
-  //will create a table with the created users  // user: User = {
-  //   firstName: '',
-  //   lastName: '',
-  //   gender: '',
-  //   email: '',
-  //   birthday: '',
-  //   address: '',
-  //   city: '',
-  //   country: '',
-  //   hobbies: [],
-  //   favoriteColor: this.defaultColor,
-  //   seats: '',
-  //   motorType: '',
-  // };
+export class AnalyticsComponent implements OnInit {
   displayedColumns: string[] = [
+    'birthday',
+    'email',
     'firstName',
     'lastName',
     'gender',
-    'email',
-    'birthday',
     'address',
     'city',
     'country',
@@ -43,26 +22,63 @@ export class AnalyticsComponent {
     'seats',
     'motorType',
   ];
-  dataSource = new MatTableDataSource<User>(this.users);
+  dataSource: any[] = [];
 
-  constructor(private userService: UserService) {
-    this.userService.getUsers().subscribe((users) => {
-      this.users = users;
-      this.dataSource = new MatTableDataSource<User>(this.users);
+  pieChartType: ChartType = ChartType.PieChart;
+  pieChartData: any[] | undefined;
+  pieChartOptions = {
+    title: 'Most Picked Engine Type by Gender',
+    width: 400,
+    height: 300,
+  };
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.userService.getUsers().subscribe((data) => {
+      this.dataSource = data;
+      this.processDataForChart(data);
     });
   }
 
-  // ngOnInit() {
-  //   this.userService.getUsers().subscribe((users) => {
-  //     this.users = users;
-  //     this.dataSource = new MatTableDataSource<User>(this.users);
-  //   });
-  // }
+  processDataForChart(users: any[]) {
+    let Fuel_male = 0;
+    let Electric_male = 0;
+    let Fuel_female = 0;
+    let Electric_female = 0;
+    users.forEach((user) => {
+      if (
+        user.gender.toLowerCase() === 'male' &&
+        user.motorType.toLowerCase() === 'fuel'
+      ) {
+        Fuel_male++;
+      }
+      if (
+        user.gender.toLowerCase() === 'male' &&
+        user.motorType.toLowerCase() === 'electric'
+      ) {
+        Electric_male++;
+      }
+      if (
+        user.gender.toLowerCase() === 'female' &&
+        user.motorType.toLowerCase() === 'fuel'
+      ) {
+        Fuel_female++;
+      }
+      if (
+        user.gender.toLowerCase() === 'female' &&
+        user.motorType.toLowerCase() === 'electric'
+      ) {
+        Electric_female++;
+      }
+    });
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.pieChartData = [
+      ['Engine Type', 'Count'],
+      ['Male Electric', Electric_male],
+      ['Male Fuel', Electric_male],
+      ['Female Electric', Electric_female],
+      ['Female Fuel', Fuel_female],
+    ];
   }
-
-  // ngOnInit() {
 }

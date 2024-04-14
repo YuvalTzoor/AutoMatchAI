@@ -1,120 +1,104 @@
-<mat-card class="dashboard-container">
-  <div class="grid-container">
-    <div class="table-container">
-      <div class="filter-container">
-        <mat-form-field >
-          <mat-label>Filter</mat-label>
-          <input
-            matInput
-            (keyup)="applyFilter($event)"
-            placeholder="Type to filter..."
-          />
-        </mat-form-field>
-      </div>
+<div class="analytics-container">
+  <!-- User Table with Angular Material Table -->
+  <div class="user-table-container">
+    <h2>User Details</h2>
+     <div class="mat-elevation-z8 table-wrapper">
+    <table mat-table  [dataSource]="dataSource" >
+      <!-- Birthday Column -->
+      <ng-container matColumnDef="birthday">
+        <th mat-header-cell *matHeaderCellDef>Birthday</th>
+        <td mat-cell *matCellDef="let element">{{ element.birthday }}</td>
+      </ng-container>
 
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        matSort
-        class="mat-elevation-z8"
-      >
-        <!-- First Name Column -->
-        <ng-container matColumnDef="firstName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
-          <td mat-cell *matCellDef="let user">{{ user.firstName }}</td>
-        </ng-container>
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
 
-        <!-- Last Name Column -->
-        <ng-container matColumnDef="lastName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
-          <td mat-cell *matCellDef="let user">{{ user.lastName }}</td>
-        </ng-container>
+      <!-- First Name Column -->
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>First Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+      </ng-container>
 
-        <!-- Gender Column -->
-        <ng-container matColumnDef="gender">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
-          <td mat-cell *matCellDef="let user">{{ user.gender }}</td>
-        </ng-container>
+      <!-- Last Name Column -->
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+      </ng-container>
 
-        <!-- Email Column -->
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
-        </ng-container>
+      <!-- Gender Column -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+      </ng-container>
 
-        <!-- Birthday Column -->
-        <ng-container matColumnDef="birthday">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Birthday</th>
-          <td mat-cell *matCellDef="let user">{{ user.birthday | date }}</td>
-        </ng-container>
+      <!-- Address Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Address</th>
+        <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+      </ng-container>
 
-        <!-- Address Column -->
-        <ng-container matColumnDef="address">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
-          <td mat-cell *matCellDef="let user">{{ user.address }}</td>
-        </ng-container>
+      <!-- City Column -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let element">{{ element.city }}</td>
+      </ng-container>
 
-        <!-- City Column -->
-        <ng-container matColumnDef="city">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
-          <td mat-cell *matCellDef="let user">{{ user.city }}</td>
-        </ng-container>
+      <!-- Country Column -->
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef>Country</th>
+        <td mat-cell *matCellDef="let element">{{ element.country }}</td>
+      </ng-container>
 
-        <!-- Country Column -->
-        <ng-container matColumnDef="country">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
-          <td mat-cell *matCellDef="let user">{{ user.country }}</td>
-        </ng-container>
+      <!-- Hobbies Column -->
+      <ng-container matColumnDef="hobbies">
+        <th mat-header-cell *matHeaderCellDef>Hobbies</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hobbies.join(", ") }}
+        </td>
+      </ng-container>
 
-        <!-- Hobbies Column -->
-        <ng-container matColumnDef="hobbies">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Hobbies</th>
-          <td mat-cell *matCellDef="let user">{{ user.hobbies.join(", ") }}</td>
-        </ng-container>
+      <!-- Favorite Color Column -->
+      <ng-container matColumnDef="favoriteColor">
+        <th mat-header-cell *matHeaderCellDef>Favorite Color</th>
+        <td mat-cell *matCellDef="let element">{{ element.favoriteColor }}</td>
+      </ng-container>
 
-        <!-- Favorite Color Column -->
-        <ng-container matColumnDef="favoriteColor">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Favorite Color
-          </th>
-          <td mat-cell *matCellDef="let user">
-            <div
-              style="width: 24px; height: 24px; background-color: {{
-                user.favoriteColor
-              }};"
-            ></div>
-          </td>
-        </ng-container>
+      <!-- Seats Column -->
+      <ng-container matColumnDef="seats">
+        <th mat-header-cell *matHeaderCellDef>Seats</th>
+        <td mat-cell *matCellDef="let element">{{ element.seats }}</td>
+      </ng-container>
 
-        <!-- Seats Column -->
-        <ng-container matColumnDef="seats">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Seats</th>
-          <td mat-cell *matCellDef="let user">{{ user.seats }}</td>
-        </ng-container>
+      <!-- Motor Type Column -->
+      <ng-container matColumnDef="motorType">
+        <th mat-header-cell *matHeaderCellDef>Motor Type</th>
+        <td mat-cell *matCellDef="let element">{{ element.motorType }}</td>
+      </ng-container>
 
-        <!-- Motor Type Column -->
-        <ng-container matColumnDef="motorType">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Motor Type</th>
-          <td mat-cell *matCellDef="let user">{{ user.motorType }}</td>
-        </ng-container>
-
-        <!-- Header Row Definition -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-        <!-- Data Rows Definition -->
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-
-      <mat-paginator
-        [pageSizeOptions]="[5, 10, 20]"
-        showFirstLastButtons
-      ></mat-paginator>
-    </div>
-
-    <div>test</div>
-    <div>test</div>
-    <div>
-      <!-- <google-chart></google-chart> -->
+      <!-- Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
     </div>
   </div>
-</mat-card>
+
+  <!-- Pie Chart for engine types -->
+  <!-- ... Other HTML content -->
+
+  <!-- Bar Chart for Most Picked Engine Type by Gender -->
+  <div *ngIf="pieChartData" class="engine-type-pie-chart">
+    <h2>Most Picked Engine Type by Gender</h2>
+  </div>
+
+  <!-- ... The rest of your existing HTML content -->
+
+  <!-- Bar Chart for colors by age -->
+  <div class="bar-chart">
+    <h2>Most Picked Colors by Age</h2>
+  </div>
+
+  <!-- ... Map for city visitors would go here -->
+</div>

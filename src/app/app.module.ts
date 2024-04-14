@@ -1,7 +1,24 @@
-import { NgModule } from '@angular/core';
+import {
+  NgModule,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { DatePipe, NgIf } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {
+  AppComponent,
+  GoogleChartsConfigService,
+  googleChartsConfigFactory,
+  googleChartsConfigSubject,
+} from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -24,11 +41,14 @@ import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
-
 import { MatTableModule } from '@angular/material/table';
+import {
+  GOOGLE_CHARTS_LAZY_CONFIG,
+  GoogleChartsModule,
+} from 'angular-google-charts';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -66,8 +86,18 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    GoogleChartsModule,
+
+    MatProgressSpinnerModule,
   ],
-  providers: [],
+  providers: [
+    GoogleChartsConfigService,
+    {
+      provide: GOOGLE_CHARTS_LAZY_CONFIG,
+      useFactory: googleChartsConfigFactory,
+      deps: [GoogleChartsConfigService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
