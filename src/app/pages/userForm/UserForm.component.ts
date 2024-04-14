@@ -230,9 +230,9 @@ export class UserFormComponent implements OnInit {
       // Mark all form controls as touched to trigger validation messages
       this.markFormGroupTouched(this.userForm);
     }
-    const x = UserService.getUsers().subscribe((users) => {
-      console.log('Users:', users);
-    });
+    // const x = UserService.getUsers().subscribe((users) => {
+    //   console.log('Users:', users);
+    // });
     this.openSnackBar(
       'User saved successfully and a confirmation Email will sent to you soon!',
       'Close'

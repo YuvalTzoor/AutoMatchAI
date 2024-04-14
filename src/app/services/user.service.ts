@@ -23,7 +23,7 @@ export class UserService {
     return of(user);
   }
 
-  static getUsers(): Observable<User[]> {
+   getUsers(): Observable<User[]> {
     console.log('Getting users');
     const userStr = localStorage.getItem('users');
     //console.log('Users:', JSON.parse(userStr as string));

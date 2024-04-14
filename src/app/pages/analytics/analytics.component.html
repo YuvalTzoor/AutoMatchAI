@@ -1,19 +1,120 @@
 <mat-card class="dashboard-container">
-
-  <h1>Dashboard</h1>
   <div class="grid-container">
-    <div>
-    test
+    <div class="table-container">
+      <div class="filter-container">
+        <mat-form-field >
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Type to filter..."
+          />
+        </mat-form-field>
+      </div>
+
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8"
+      >
+        <!-- First Name Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+          <td mat-cell *matCellDef="let user">{{ user.firstName }}</td>
+        </ng-container>
+
+        <!-- Last Name Column -->
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+          <td mat-cell *matCellDef="let user">{{ user.lastName }}</td>
+        </ng-container>
+
+        <!-- Gender Column -->
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+          <td mat-cell *matCellDef="let user">{{ user.gender }}</td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
+
+        <!-- Birthday Column -->
+        <ng-container matColumnDef="birthday">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Birthday</th>
+          <td mat-cell *matCellDef="let user">{{ user.birthday | date }}</td>
+        </ng-container>
+
+        <!-- Address Column -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+          <td mat-cell *matCellDef="let user">{{ user.address }}</td>
+        </ng-container>
+
+        <!-- City Column -->
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+          <td mat-cell *matCellDef="let user">{{ user.city }}</td>
+        </ng-container>
+
+        <!-- Country Column -->
+        <ng-container matColumnDef="country">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+          <td mat-cell *matCellDef="let user">{{ user.country }}</td>
+        </ng-container>
+
+        <!-- Hobbies Column -->
+        <ng-container matColumnDef="hobbies">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Hobbies</th>
+          <td mat-cell *matCellDef="let user">{{ user.hobbies.join(", ") }}</td>
+        </ng-container>
+
+        <!-- Favorite Color Column -->
+        <ng-container matColumnDef="favoriteColor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Favorite Color
+          </th>
+          <td mat-cell *matCellDef="let user">
+            <div
+              style="width: 24px; height: 24px; background-color: {{
+                user.favoriteColor
+              }};"
+            ></div>
+          </td>
+        </ng-container>
+
+        <!-- Seats Column -->
+        <ng-container matColumnDef="seats">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Seats</th>
+          <td mat-cell *matCellDef="let user">{{ user.seats }}</td>
+        </ng-container>
+
+        <!-- Motor Type Column -->
+        <ng-container matColumnDef="motorType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Motor Type</th>
+          <td mat-cell *matCellDef="let user">{{ user.motorType }}</td>
+        </ng-container>
+
+        <!-- Header Row Definition -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <!-- Data Rows Definition -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
-    <div>
-     test
-    </div>
-    <div>
-     test
-    </div>
+
+    <div>test</div>
+    <div>test</div>
     <div>
       <!-- <google-chart></google-chart> -->
     </div>
   </div>
-
 </mat-card>

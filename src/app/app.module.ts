@@ -25,6 +25,11 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
 
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
+
 
 @NgModule({
   declarations: [
@@ -58,6 +63,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatSnackBarModule,
     MatSidenavModule,
     MatGridListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
