@@ -179,7 +179,7 @@
       </div>
 
       <!-- Remaining fields -->
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-label>List of hobbies (can also be more than one)</mat-label>
         <input matInput type="text" formControlName="hobbies" required />
         <mat-error
@@ -198,8 +198,44 @@
             >Hobbies cannot be more than 200 characters long.</span
           >
         </mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
+      <mat-form-field class="example-form-field">
+        <mat-label>List of hobbies</mat-label>
+        <mat-chip-grid
+          #chipGrid
+          aria-label="Enter keywords"
+          formControlName="hobbies"
+        >
+          <mat-chip *ngFor="let hobbie of hobbies">
+            {{ hobbie }}
+            <mat-icon matChipRemove (click)="removehobbie(hobbie)"
+              >cancel</mat-icon
+            >
+          </mat-chip>
+        </mat-chip-grid>
+        <input
+          placeholder="New hobbie...(press enter to add)"
+          [matChipInputFor]="chipGrid"
+          (matChipInputTokenEnd)="add($event)"
+        />
+        <mat-error
+          *ngIf="
+            userForm.get('hobbies')?.invalid &&
+            (userForm.get('hobbies')?.dirty || userForm.get('hobbies')?.touched)
+          "
+        >
+          <span *ngIf="userForm.get('hobbies')?.errors?.['required']"
+            >Hobbies are required.</span
+          >
+          <span *ngIf="userForm.get('hobbies')?.errors?.['minlength']"
+            >Hobbies must be at least 1 character long.</span
+          >
+          <span *ngIf="userForm.get('hobbies')?.errors?.['maxlength']"
+            >Hobbies cannot be more than 200 characters long.</span
+          >
+        </mat-error>
+      </mat-form-field>
       <mat-form-field>
         <mat-label>Favorite color</mat-label>
         <input

@@ -15,9 +15,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HeaderComponent } from './components/header/header.component';
 import { UserFormComponent } from './pages/userForm/UserForm.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { FooterComponent } from './components/footer/footer.component';
     BrowserAnimationsModule,
     MatNativeDateModule,
     MatIconModule,
+    MatChipsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
