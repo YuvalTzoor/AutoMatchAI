@@ -27,11 +27,10 @@ function dateValidator(control: AbstractControl): ValidationErrors | null {
 
   if (selectedDate && !isNaN(Date.parse(selectedDate))) {
     const parsedSelectedDate = new Date(selectedDate);
-    console.log('Selected date:', parsedSelectedDate);
-    console.log('Current date:', currentDate);
+
 
     if (parsedSelectedDate > currentDate) {
-      console.log('Invalid date');
+
       return { invalidDate: true };
     }
   }
@@ -87,7 +86,7 @@ export class UserFormComponent implements OnInit {
 
   removehobbie(hobbies: string) {
     const index = this.hobbies.indexOf(hobbies);
-    console.log('index:', index);
+
     if (index >= 0) {
       this.hobbies.splice(index, 1);
       this.userForm.get('hobbies')?.patchValue(this.hobbies);
@@ -196,21 +195,19 @@ export class UserFormComponent implements OnInit {
     });
   }
   onSave() {
-    console.log('Form submitted');
-    console.log('Form validity:', this.userForm.valid);
-    console.log('Form value:', this.userForm.value);
+
 
     if (this.userForm.valid) {
-      console.log('Form is valid');
+
 
       this.user = this.userForm.value;
-      console.log('Saving user:', this.user);
+
 
       let users = JSON.parse(localStorage.getItem('users') || '[]');
       users.push(this.user);
       localStorage.setItem('users', JSON.stringify(users));
     } else {
-      console.log('Form is invalid');
+
 
       this.markFormGroupTouched(this.userForm);
     }

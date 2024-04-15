@@ -35,6 +35,6 @@ const routes: Routes = [
 })
 export class AppRoutingModule {
   constructor() {
-    console.log('AppRoutingModule loaded');
+
   }
 }

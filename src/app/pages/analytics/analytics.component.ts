@@ -94,13 +94,12 @@ export class AnalyticsComponent implements OnInit {
     let totalVisitorsTemp: number = parseInt(
       localStorage.getItem('TotalVisitors') || '0'
     );
-    console.log('SubmitterCountTemp:', SubmitterCountTemp);
-    console.log('totalVisitorsTemp:', totalVisitorsTemp);
+
     this.SubmitterCount =
       totalVisitorsTemp > 0
         ? (SubmitterCountTemp / totalVisitorsTemp) * 100
         : 0;
-    console.log('successRate:', this.SubmitterCount);
+  
   }
 
   processDataForEngineType(
@@ -194,7 +193,7 @@ export class AnalyticsComponent implements OnInit {
     const datasets = ageGroups.map((group) => {
       return {
         label: group,
-        data: labels.map((color) => colorCountsByAgeGroup[group][color] || 0), 
+        data: labels.map((color) => colorCountsByAgeGroup[group][color] || 0),
       };
     });
 
