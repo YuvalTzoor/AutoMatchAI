@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { ChartType } from 'angular-google-charts'; // Ensure this is the correct path
-import { GoogleChartsConfigService } from '../../app.component'; // Ensure this is the correct path
+import {
+  ChartData,
+  ChartTypeRegistry,
+  CoreChartOptions,
+  DatasetChartOptions,
+  ElementChartOptions,
+  PluginChartOptions,
+  ScaleChartOptions,
+} from 'chart.js';
+import { _DeepPartialObject } from 'chart.js/dist/types/utils';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-analytics',
@@ -10,43 +19,84 @@ import { GoogleChartsConfigService } from '../../app.component'; // Ensure this 
 })
 export class AnalyticsComponent implements OnInit {
   displayedColumns: string[] = [
-    'birthday',
-    'email',
     'firstName',
     'lastName',
     'gender',
+    'birthday',
+    'email',
     'address',
     'city',
     'country',
-    'hobbies',
     'favoriteColor',
-    'seats',
+    'hobbies',
     'motorType',
+    'seats',
   ];
-  dataSource: any[] = [];
 
-  pieChartType: ChartType = ChartType.PieChart;
-  pieChartData: any[] | undefined;
-  pieChartOptions = {
-    title: 'Most Picked Engine Type by Gender',
-    width: 400,
-    height: 300,
+  dataSource: User[] = [];
+  options1:
+    | _DeepPartialObject<
+        CoreChartOptions<keyof ChartTypeRegistry> &
+          ElementChartOptions<keyof ChartTypeRegistry> &
+          PluginChartOptions<keyof ChartTypeRegistry> &
+          DatasetChartOptions<keyof ChartTypeRegistry> &
+          ScaleChartOptions<keyof ChartTypeRegistry>
+      >
+    | undefined;
+  options2:
+    | _DeepPartialObject<
+        CoreChartOptions<keyof ChartTypeRegistry> &
+          ElementChartOptions<keyof ChartTypeRegistry> &
+          PluginChartOptions<keyof ChartTypeRegistry> &
+          DatasetChartOptions<keyof ChartTypeRegistry> &
+          ScaleChartOptions<keyof ChartTypeRegistry>
+      >
+    | undefined;
+  options3:
+    | _DeepPartialObject<
+        CoreChartOptions<keyof ChartTypeRegistry> &
+          ElementChartOptions<keyof ChartTypeRegistry> &
+          PluginChartOptions<keyof ChartTypeRegistry> &
+          DatasetChartOptions<keyof ChartTypeRegistry> &
+          ScaleChartOptions<keyof ChartTypeRegistry>
+      >
+    | undefined;
+  data1: ChartData<'pie', number[], string | string[]> = {
+    labels: [],
+    datasets: [{ data: [] }],
+  };
+  data2: ChartData<'bar', number[], string | string[]> = {
+    labels: [],
+    datasets: [],
+  };
+  data3: ChartData<'pie', number[], string | string[]> = {
+    labels: [],
+    datasets: [{ data: [] }],
   };
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((data) => {
-      this.dataSource = data;
-      this.processDataForChart(data);
+    this.userService.getUsers().subscribe((users: User[]) => {
+      this.dataSource = users;
+      this.data1 = this.processDataForEngineType(users);
+      this.data2 = this.processDataForChart(users) as ChartData<
+        'bar',
+        number[],
+        string | string[]
+      >;
+      this.data3 = this.processHobbiesData(users); // Process and store hobbies data
     });
   }
 
-  processDataForChart(users: any[]) {
+  processDataForEngineType(
+    users: User[]
+  ): ChartData<'pie', number[], string | string[]> {
     let Fuel_male = 0;
     let Electric_male = 0;
     let Fuel_female = 0;
     let Electric_female = 0;
+
     users.forEach((user) => {
       if (
         user.gender.toLowerCase() === 'male' &&
@@ -74,12 +124,93 @@ export class AnalyticsComponent implements OnInit {
       }
     });
 
-    this.pieChartData = [
-      ['Engine Type', 'Count'],
-      ['Male Electric', Electric_male],
-      ['Male Fuel', Electric_male],
-      ['Female Electric', Electric_female],
-      ['Female Fuel', Fuel_female],
-    ];
+    return {
+      labels: ['Fuel Male', 'Electric Male', 'Fuel Female', 'Electric Female'],
+      datasets: [
+        { data: [Fuel_male, Electric_male, Fuel_female, Electric_female] },
+      ],
+    };
+  }
+
+  processDataForChart(
+    users: User[]
+  ): ChartData<'bar', number[], string | string[]> {
+    const colorCountsByAgeGroup: {
+      [ageGroup: string]: { [color: string]: number };
+    } = {};
+    const ageGroups = ['20-29', '30-39', '40-49', '50-59', '60+'];
+
+    // First, ensure that each age group in colorCountsByAgeGroup is initialized to an empty object
+    ageGroups.forEach((group) => {
+      colorCountsByAgeGroup[group] = {};
+    });
+
+    // Process each user to increment their favorite color in the correct age group
+    users.forEach((user) => {
+      const age = this.calculateAge(user.birthday);
+      let ageGroup = '';
+
+      // Determine the age group based on age
+      if (age >= 20 && age < 30) {
+        ageGroup = '20-29';
+      } else if (age >= 30 && age < 40) {
+        ageGroup = '30-39';
+      } else if (age >= 40 && age < 50) {
+        ageGroup = '40-49';
+      } else if (age >= 50 && age < 60) {
+        ageGroup = '50-59';
+      } else if (age >= 60) {
+        ageGroup = '60+';
+      }
+
+      if (ageGroup) {
+        const color = user.favoriteColor;
+        // Ensure the color key exists in the age group dictionary
+        if (!colorCountsByAgeGroup[ageGroup][color]) {
+          colorCountsByAgeGroup[ageGroup][color] = 0;
+        }
+        colorCountsByAgeGroup[ageGroup][color]++;
+      }
+    });
+
+    // Create labels and datasets for the chart
+    const labels = Object.keys(colorCountsByAgeGroup)
+      .flatMap((group) => Object.keys(colorCountsByAgeGroup[group]))
+      .filter((value, index, self) => self.indexOf(value) === index); // Ensure unique labels
+
+    const datasets = ageGroups.map((group) => {
+      return {
+        label: group,
+        data: labels.map((color) => colorCountsByAgeGroup[group][color] || 0), // Safely access color count or default to 0
+      };
+    });
+
+    return { labels, datasets };
+  }
+
+  processHobbiesData(
+    users: User[]
+  ): ChartData<'pie', number[], string | string[]> {
+    const hobbyCounts: { [hobby: string]: number } = {};
+    users.forEach((user) => {
+      user.hobbies.forEach((hobby) => {
+        hobbyCounts[hobby] = (hobbyCounts[hobby] || 0) + 1;
+      });
+    });
+
+    const labels = Object.keys(hobbyCounts);
+    const data = Object.values(hobbyCounts);
+
+    return {
+      labels: labels,
+      datasets: [{ data: data }],
+    };
+  }
+
+  calculateAge(birthday: string): number {
+    const birthdayDate = new Date(birthday);
+    const ageDifMs = Date.now() - birthdayDate.getTime();
+    const ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 }

@@ -1,21 +1,9 @@
 <div class="analytics-container">
   <!-- User Table with Angular Material Table -->
   <div class="user-table-container">
-    <h2>User Details</h2>
+    <h2>Users Details</h2>
     <div class="mat-elevation-z8 table-wrapper">
       <table mat-table [dataSource]="dataSource">
-        <!-- Birthday Column -->
-        <ng-container matColumnDef="birthday">
-          <th mat-header-cell *matHeaderCellDef>Birthday</th>
-          <td mat-cell *matCellDef="let element">{{ element.birthday }}</td>
-        </ng-container>
-
-        <!-- Email Column -->
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef>Email</th>
-          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-        </ng-container>
-
         <!-- First Name Column -->
         <ng-container matColumnDef="firstName">
           <th mat-header-cell *matHeaderCellDef>First Name</th>
@@ -27,6 +15,18 @@
           <th mat-header-cell *matHeaderCellDef>Last Name</th>
           <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
         </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+        </ng-container>
+        <!-- Birthday Column -->
+        <ng-container matColumnDef="birthday">
+          <th mat-header-cell *matHeaderCellDef>Birthday</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.birthday | formatDate }}
+          </td>
+        </ng-container>
+        <!-- Email Column -->
 
         <!-- Gender Column -->
         <ng-container matColumnDef="gender">
@@ -90,28 +90,40 @@
   <!-- Pie Chart for engine types -->
   <!-- ... Other HTML content -->
   <div class="container-fluid main">
-    <div class="m-2">
-      <h1 class="text-center heading"><u>Angular Charts Integration</u></h1>
+    <div class="bar-chart">
+      <h2>Most Picked Colors by Age</h2>
+      <app-bar-chart
+        [barChartData]="data2"
+        [barChartOptions]="options2"
+      ></app-bar-chart>
     </div>
-    <div class="row wrapper">
-      <div class="col-md-6">
-        <app-bar-chart></app-bar-chart>
-      </div>
-      <div class="col-md-6">
-        <app-pie-chart></app-pie-chart>
-      </div>
+
+    <!-- Bar Chart for Most Picked Engine Type by Gender -->
+    <div class="pie-chart">
+      <h2>Most Picked Engine Type by Gender</h2>
+
+      <app-pie-chart
+        [pieChartData]="data1"
+        [pieChartOptions]="options1"
+      ></app-pie-chart>
+    </div>
+    <div class="pie-chart">
+      <h2>Most common hobby amongst visitors</h2>
+
+      <app-pie-chart
+        [pieChartData]="data3"
+        [pieChartOptions]="options3"
+      ></app-pie-chart>
     </div>
   </div>
-  <!-- Bar Chart for Most Picked Engine Type by Gender -->
-  <div *ngIf="pieChartData" class="engine-type-pie-chart">
-    <h2>Most Picked Engine Type by Gender</h2>
+  <!-- Bar Chart for Most Picked Engine Type by Gend
   </div>
 
   <!-- ... The rest of your existing HTML content -->
 
   <!-- Bar Chart for colors by age -->
   <div class="bar-chart">
-    <h2>Most Picked Colors by Age</h2>
+    <h2></h2>
   </div>
 
   <!-- ... Map for city visitors would go here -->

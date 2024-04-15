@@ -67,6 +67,7 @@ mat-form-field {
   .control-group {
     flex-direction: column;
   }
+
 }
 
 @media (max-width: 480px) {

@@ -53,6 +53,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { FormatDatePipe } from './pipes/format-date.pipe';
 // import { CitiesChartComponent } from './components/cities-chart/cities-chart.component';
 
 @NgModule({
@@ -65,6 +66,7 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     PageNotFoundComponent,
     BarChartComponent,
     PieChartComponent,
+    FormatDatePipe,
   ],
   imports: [
     BrowserModule,
