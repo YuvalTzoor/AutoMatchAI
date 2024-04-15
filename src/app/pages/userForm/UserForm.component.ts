@@ -11,11 +11,11 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../../interfaces/user';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
+
+import { MatChipInputEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule, MatChipGrid } from '@angular/material/chips';
+
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { UserService } from 'src/app/services/user.service';
 
@@ -28,9 +28,7 @@ function dateValidator(control: AbstractControl): ValidationErrors | null {
   if (selectedDate && !isNaN(Date.parse(selectedDate))) {
     const parsedSelectedDate = new Date(selectedDate);
 
-
     if (parsedSelectedDate > currentDate) {
-
       return { invalidDate: true };
     }
   }
@@ -48,34 +46,34 @@ export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   defaultColor: string = '#000000';
 
-  // user: User = {
-  //   firstName: '',
-  //   lastName: '',
-  //   gender: '',
-  //   email: '',
-  //   birthday: '',
-  //   address: '',
-  //   city: '',
-  //   country: '',
-  //   hobbies: [],
-  //   favoriteColor: this.defaultColor,
-  //   seats: '',
-  //   motorType: '',
-  // };
   user: User = {
-    firstName: 'John',
-    lastName: 'Doe',
-    gender: 'male',
-    email: 'john.doe@example.com',
-    birthday: new Date('1990-05-15') as unknown as string,
-    address: '123 Main St',
-    city: 'New York',
-    country: 'USA',
-    hobbies: ['reading', 'painting', 'hiking'],
+    firstName: '',
+    lastName: '',
+    gender: '',
+    email: '',
+    birthday: '',
+    address: '',
+    city: '',
+    country: '',
+    hobbies: [],
     favoriteColor: this.defaultColor,
-    seats: '4',
-    motorType: 'electric',
+    seats: '',
+    motorType: '',
   };
+  // user: User = {
+  //   firstName: 'John',
+  //   lastName: 'Doe',
+  //   gender: 'male',
+  //   email: 'john.doe@example.com',
+  //   birthday: new Date('1990-05-15') as unknown as string,
+  //   address: '123 Main St',
+  //   city: 'New York',
+  //   country: 'USA',
+  //   hobbies: ['reading', 'painting', 'hiking'],
+  //   favoriteColor: this.defaultColor,
+  //   seats: '4',
+  //   motorType: 'electric',
+  // };
 
   hobbies: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -95,17 +93,33 @@ export class UserFormComponent implements OnInit {
     }
   }
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+  add(valueOrEvent: string | MatChipInputEvent): void {
+    let value: string;
 
-    // Add our keyword
-    if (value) {
-      this.hobbies.push(value);
+    // Check if the input is from the event or direct string
+    if (typeof valueOrEvent === 'string') {
+      value = valueOrEvent.trim();
+    } else {
+      value = valueOrEvent.value.trim();
+      // Clear the input value
+      valueOrEvent.chipInput!.clear();
     }
 
-    // Clear the input value
-    event.chipInput!.clear();
+    // Add the hobby if it's not empty and not already in the list
+    if (value && !this.hobbies.includes(value)) {
+      this.hobbies.push(value);
+      this.userForm.get('hobbies')?.setValue(this.hobbies); // Update the form control
+    }
   }
+
+  addHobby(hobby: string): void {
+    const value = hobby.trim();
+    if (value && !this.hobbies.includes(value)) {
+      this.hobbies.push(value);
+      this.userForm.get('hobbies')?.setValue(this.hobbies); // Update the form control
+    }
+  }
+
   @ViewChild('chipList', { static: true }) chipList: MatChipsModule | undefined;
   constructor(
     public route: ActivatedRoute,
@@ -195,38 +209,30 @@ export class UserFormComponent implements OnInit {
     });
   }
   onSave() {
-
-
     if (this.userForm.valid) {
-
-
       this.user = this.userForm.value;
-
 
       let users = JSON.parse(localStorage.getItem('users') || '[]');
       users.push(this.user);
+      let SubmitterCount: number = parseInt(
+        localStorage.getItem('SubmitterCount') || '0'
+      );
+      if (SubmitterCount) {
+        SubmitterCount = SubmitterCount + 1;
+      } else {
+        SubmitterCount = 1;
+      }
+      localStorage.setItem('SubmitterCount', SubmitterCount.toString());
       localStorage.setItem('users', JSON.stringify(users));
+      this.openSnackBar(
+        'User saved successfully and a confirmation Email will sent to you soon!',
+        'Close'
+      );
+      //will reset the form after saving the user
+      this.userForm.reset();
     } else {
-
-
       this.markFormGroupTouched(this.userForm);
     }
-
-
-    let SubmitterCount: number = parseInt(
-      localStorage.getItem('SubmitterCount') || '0'
-    );
-    if (SubmitterCount) {
-      SubmitterCount = SubmitterCount + 1;
-    } else {
-      SubmitterCount = 1;
-    }
-    localStorage.setItem('SubmitterCount', SubmitterCount.toString());
-
-    this.openSnackBar(
-      'User saved successfully and a confirmation Email will sent to you soon!',
-      'Close'
-    );
   }
 
   markFormGroupTouched(formGroup: FormGroup) {

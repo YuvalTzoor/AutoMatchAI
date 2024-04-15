@@ -1,7 +1,6 @@
 <mat-card class="UserForm-card mat-elevation-z8">
   <mat-card-content class="form-scroll-container">
     <form (submit)="onSave()" [formGroup]="userForm" class="user-form">
-
       <div class="control-group">
         <mat-form-field>
           <mat-label>First Name</mat-label>
@@ -110,7 +109,6 @@
         </mat-error>
       </mat-form-field>
 
-      
       <div class="control-group">
         <mat-form-field>
           <mat-label>Address</mat-label>
@@ -177,29 +175,6 @@
           </mat-error>
         </mat-form-field>
       </div>
-
-      <!-- Remaining fields -->
-      <!-- <mat-form-field>
-        <mat-label>List of hobbies (can also be more than one)</mat-label>
-        <input matInput type="text" formControlName="hobbies" required />
-        <mat-error
-          *ngIf="
-            userForm.get('hobbies')?.invalid &&
-            (userForm.get('hobbies')?.dirty || userForm.get('hobbies')?.touched)
-          "
-        >
-          <span *ngIf="userForm.get('hobbies')?.errors?.['required']"
-            >Hobbies are required.</span
-          >
-          <span *ngIf="userForm.get('hobbies')?.errors?.['minlength']"
-            >Hobbies must be at least 1 character long.</span
-          >
-          <span *ngIf="userForm.get('hobbies')?.errors?.['maxlength']"
-            >Hobbies cannot be more than 200 characters long.</span
-          >
-        </mat-error>
-      </mat-form-field> -->
-
       <mat-form-field class="example-form-field">
         <mat-label>List of hobbies</mat-label>
         <mat-chip-grid
@@ -215,10 +190,19 @@
           </mat-chip>
         </mat-chip-grid>
         <input
+          #hobbyInput
           placeholder="New hobbie...(press enter to add)"
           [matChipInputFor]="chipGrid"
           (matChipInputTokenEnd)="add($event)"
         />
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="add(hobbyInput.value)"
+        >
+          Add Hobby
+        </button>
         <mat-error
           *ngIf="
             userForm.get('hobbies')?.invalid &&
