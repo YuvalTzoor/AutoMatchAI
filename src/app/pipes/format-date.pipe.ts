@@ -8,8 +8,8 @@ export class FormatDatePipe implements PipeTransform {
     if (!value) return '';
     const date = new Date(value);
     const day = date.getDate();
-    const month = date.getMonth() + 1; // JavaScript months are 0-based.
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day}.${month}.${year}`; // Output format: 17.1.1995
+    return `${day}.${month}.${year}`;
   }
 }

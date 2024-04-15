@@ -73,14 +73,14 @@ export class UserFormComponent implements OnInit {
     city: 'New York',
     country: 'USA',
     hobbies: ['reading', 'painting', 'hiking'],
-    favoriteColor: this.defaultColor, // Assuming defaultColor is '#000000' (black)
+    favoriteColor: this.defaultColor,
     seats: '4',
     motorType: 'electric',
   };
 
   hobbies: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  //keywords = [''];
+
   formControl = new FormControl(['angular']);
 
   announcer = inject(LiveAnnouncer);
@@ -202,21 +202,19 @@ export class UserFormComponent implements OnInit {
 
     if (this.userForm.valid) {
       console.log('Form is valid');
-      // Update the user object with the form values
+
       this.user = this.userForm.value;
       console.log('Saving user:', this.user);
-      //will save the user to the local storage in users key
+
       let users = JSON.parse(localStorage.getItem('users') || '[]');
       users.push(this.user);
       localStorage.setItem('users', JSON.stringify(users));
     } else {
       console.log('Form is invalid');
-      // Mark all form controls as touched to trigger validation messages
+
       this.markFormGroupTouched(this.userForm);
     }
-    // const x = UserService.getUsers().subscribe((users) => {
-    //   console.log('Users:', users);
-    // });
+
 
     let SubmitterCount: number = parseInt(
       localStorage.getItem('SubmitterCount') || '0'

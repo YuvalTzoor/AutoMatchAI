@@ -15,9 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import {
   AppComponent,
-  GoogleChartsConfigService,
-  googleChartsConfigFactory,
-  googleChartsConfigSubject,
+
 } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -42,10 +40,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
-import {
-  GOOGLE_CHARTS_LAZY_CONFIG,
-  GoogleChartsModule,
-} from 'angular-google-charts';
+
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -95,18 +90,13 @@ import { PercentFormatPipe } from './pipes/percent-format.pipe';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    GoogleChartsModule,
+
     MatProgressSpinnerModule,
 
     NgChartsModule,
   ],
   providers: [
-    GoogleChartsConfigService,
-    {
-      provide: GOOGLE_CHARTS_LAZY_CONFIG,
-      useFactory: googleChartsConfigFactory,
-      deps: [GoogleChartsConfigService],
-    },
+  
     { provide: NgChartsConfiguration, useValue: { generateColors: false } },
   ],
   bootstrap: [AppComponent],
