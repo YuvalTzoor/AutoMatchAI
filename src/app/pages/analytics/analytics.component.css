@@ -64,7 +64,7 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
 
 /* Ensure the table stretches full width */
 .mat-table {
-  width: 100%;
+  width: 80%;
 }
 .table-wrapper {
   overflow-x: auto; /* Enables horizontal scrolling */

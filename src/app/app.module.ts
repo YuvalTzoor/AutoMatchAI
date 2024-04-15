@@ -50,6 +50,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+// import { CitiesChartComponent } from './components/cities-chart/cities-chart.component';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FooterComponent,
     AnalyticsComponent,
     PageNotFoundComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatPaginatorModule,
     MatSortModule,
     GoogleChartsModule,
-
     MatProgressSpinnerModule,
   ],
   providers: [

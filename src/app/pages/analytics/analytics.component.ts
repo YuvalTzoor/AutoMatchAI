@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ChartType } from 'angular-google-charts'; // Ensure this is the correct path
+import { GoogleChartsConfigService } from '../../app.component'; // Ensure this is the correct path
 
 @Component({
   selector: 'app-analytics',
