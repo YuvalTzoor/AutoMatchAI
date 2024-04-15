@@ -50,8 +50,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 // import { CitiesChartComponent } from './components/cities-chart/cities-chart.component';
-
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FooterComponent,
     AnalyticsComponent,
     PageNotFoundComponent,
-
+    BarChartComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +94,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSortModule,
     GoogleChartsModule,
     MatProgressSpinnerModule,
+
+    NgChartsModule,
   ],
   providers: [
     GoogleChartsConfigService,
@@ -99,6 +104,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
       useFactory: googleChartsConfigFactory,
       deps: [GoogleChartsConfigService],
     },
+    { provide: NgChartsConfiguration, useValue: { generateColors: false } },
   ],
   bootstrap: [AppComponent],
 })

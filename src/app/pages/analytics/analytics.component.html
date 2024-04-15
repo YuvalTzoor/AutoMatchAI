@@ -89,19 +89,30 @@
 
   <!-- Pie Chart for engine types -->
   <!-- ... Other HTML content -->
-
-    <!-- Bar Chart for Most Picked Engine Type by Gender -->
-    <div *ngIf="pieChartData" class="engine-type-pie-chart">
-      <h2>Most Picked Engine Type by Gender</h2>
+  <div class="container-fluid main">
+    <div class="m-2">
+      <h1 class="text-center heading"><u>Angular Charts Integration</u></h1>
     </div>
-
-    <!-- ... The rest of your existing HTML content -->
-
-    <!-- Bar Chart for colors by age -->
-    <div class="bar-chart">
-      <h2>Most Picked Colors by Age</h2>
+    <div class="row wrapper">
+      <div class="col-md-6">
+        <app-bar-chart></app-bar-chart>
+      </div>
+      <div class="col-md-6">
+        <app-pie-chart></app-pie-chart>
+      </div>
     </div>
-
-    <!-- ... Map for city visitors would go here -->
+  </div>
+  <!-- Bar Chart for Most Picked Engine Type by Gender -->
+  <div *ngIf="pieChartData" class="engine-type-pie-chart">
+    <h2>Most Picked Engine Type by Gender</h2>
   </div>
 
+  <!-- ... The rest of your existing HTML content -->
+
+  <!-- Bar Chart for colors by age -->
+  <div class="bar-chart">
+    <h2>Most Picked Colors by Age</h2>
+  </div>
+
+  <!-- ... Map for city visitors would go here -->
+</div>
