@@ -73,6 +73,7 @@ export class AnalyticsComponent implements OnInit {
     labels: [],
     datasets: [{ data: [] }],
   };
+  SubmitterCount: any;
 
   constructor(private userService: UserService) {}
 
@@ -87,6 +88,19 @@ export class AnalyticsComponent implements OnInit {
       >;
       this.data3 = this.processHobbiesData(users); // Process and store hobbies data
     });
+    let SubmitterCountTemp: number = parseInt(
+      localStorage.getItem('SubmitterCount') || '0'
+    );
+    let totalVisitorsTemp: number = parseInt(
+      localStorage.getItem('TotalVisitors') || '0'
+    );
+    console.log('SubmitterCountTemp:', SubmitterCountTemp);
+    console.log('totalVisitorsTemp:', totalVisitorsTemp);
+    this.SubmitterCount =
+      totalVisitorsTemp > 0
+        ? (SubmitterCountTemp / totalVisitorsTemp) * 100
+        : 0;
+    console.log('successRate:', this.SubmitterCount);
   }
 
   processDataForEngineType(

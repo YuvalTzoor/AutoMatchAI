@@ -54,7 +54,7 @@ import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { FormatDatePipe } from './pipes/format-date.pipe';
-// import { CitiesChartComponent } from './components/cities-chart/cities-chart.component';
+import { PercentFormatPipe } from './pipes/percent-format.pipe';
 
 @NgModule({
   declarations: [
@@ -67,6 +67,7 @@ import { FormatDatePipe } from './pipes/format-date.pipe';
     BarChartComponent,
     PieChartComponent,
     FormatDatePipe,
+    PercentFormatPipe,
   ],
   imports: [
     BrowserModule,

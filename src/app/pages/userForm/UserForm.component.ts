@@ -178,34 +178,18 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    //will add demo data to the form
+    let TotalVisitors: number = parseInt(
+      localStorage.getItem('TotalVisitors') || '0'
+    );
+    if (TotalVisitors) {
+      TotalVisitors = TotalVisitors + 1;
+    } else {
+      TotalVisitors = 1;
+    }
+
+    localStorage.setItem('TotalVisitors', TotalVisitors.toString());
   }
 
-  // selected(
-  //   event: MatAutocompleteSelectedEvent,
-  //   hobbyInput: HTMLInputElement
-  // ): void {
-  //   this.hobbyList.push(event.option.viewValue);
-  //   this.userForm.get('hobby')?.patchValue(this.hobbyList);
-  //   hobbyInput.value = '';
-  //   this.hobbyInputCtrl.setValue(null);
-  //   this.filteredHobby = of(this.filterHobby(null));
-  // }
-
-  // private filterHobby(value: string | null): string[] {
-  //   const filterBy = this.hobbyList.map((el) => el.toLowerCase());
-  //   const filteredSelected = [...this.allHobbyList].filter(
-  //     (hobby) => !filterBy.includes(hobby.toLowerCase())
-  //   );
-  //   if (value) {
-  //     const filterValue = value.toLowerCase();
-  //     return filteredSelected.filter((hobby) =>
-  //       hobby.toLowerCase().includes(filterValue)
-  //     );
-  //   } else {
-  //     return filteredSelected;
-  //   }
-  // }
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
@@ -233,6 +217,17 @@ export class UserFormComponent implements OnInit {
     // const x = UserService.getUsers().subscribe((users) => {
     //   console.log('Users:', users);
     // });
+
+    let SubmitterCount: number = parseInt(
+      localStorage.getItem('SubmitterCount') || '0'
+    );
+    if (SubmitterCount) {
+      SubmitterCount = SubmitterCount + 1;
+    } else {
+      SubmitterCount = 1;
+    }
+    localStorage.setItem('SubmitterCount', SubmitterCount.toString());
+
     this.openSnackBar(
       'User saved successfully and a confirmation Email will sent to you soon!',
       'Close'
