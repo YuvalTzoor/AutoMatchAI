@@ -1,0 +1,12 @@
+/* page-not-found.component.css */
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Use full height to center vertically */
+}
+
+mat-card {
+  max-width: 600px;
+  text-align: center;
+}
