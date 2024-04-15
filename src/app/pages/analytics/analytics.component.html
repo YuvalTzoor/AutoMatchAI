@@ -1,16 +1,13 @@
 <div class="analytics-container">
-  <!-- User Table with Angular Material Table -->
   <div class="user-table-container">
     <h2>Users Details</h2>
     <div class="mat-elevation-z8 table-wrapper">
       <table mat-table [dataSource]="dataSource">
-        <!-- First Name Column -->
         <ng-container matColumnDef="firstName">
           <th mat-header-cell *matHeaderCellDef>First Name</th>
           <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
         </ng-container>
 
-        <!-- Last Name Column -->
         <ng-container matColumnDef="lastName">
           <th mat-header-cell *matHeaderCellDef>Last Name</th>
           <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
@@ -19,40 +16,38 @@
           <th mat-header-cell *matHeaderCellDef>Email</th>
           <td mat-cell *matCellDef="let element">{{ element.email }}</td>
         </ng-container>
-        <!-- Birthday Column -->
+
         <ng-container matColumnDef="birthday">
           <th mat-header-cell *matHeaderCellDef>Birthday</th>
           <td mat-cell *matCellDef="let element">
             {{ element.birthday | formatDate }}
           </td>
         </ng-container>
-        <!-- Email Column -->
-
-        <!-- Gender Column -->
+  
         <ng-container matColumnDef="gender">
           <th mat-header-cell *matHeaderCellDef>Gender</th>
           <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
         </ng-container>
 
-        <!-- Address Column -->
+
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef>Address</th>
           <td mat-cell *matCellDef="let element">{{ element.address }}</td>
         </ng-container>
 
-        <!-- City Column -->
+
         <ng-container matColumnDef="city">
           <th mat-header-cell *matHeaderCellDef>City</th>
           <td mat-cell *matCellDef="let element">{{ element.city }}</td>
         </ng-container>
 
-        <!-- Country Column -->
+
         <ng-container matColumnDef="country">
           <th mat-header-cell *matHeaderCellDef>Country</th>
           <td mat-cell *matCellDef="let element">{{ element.country }}</td>
         </ng-container>
 
-        <!-- Hobbies Column -->
+
         <ng-container matColumnDef="hobbies">
           <th mat-header-cell *matHeaderCellDef>Hobbies</th>
           <td mat-cell *matCellDef="let element">
@@ -60,7 +55,7 @@
           </td>
         </ng-container>
 
-        <!-- Favorite Color Column -->
+
         <ng-container matColumnDef="favoriteColor">
           <th mat-header-cell *matHeaderCellDef>Favorite Color</th>
           <td mat-cell *matCellDef="let element">
@@ -68,27 +63,25 @@
           </td>
         </ng-container>
 
-        <!-- Seats Column -->
+
         <ng-container matColumnDef="seats">
           <th mat-header-cell *matHeaderCellDef>Seats</th>
           <td mat-cell *matCellDef="let element">{{ element.seats }}</td>
         </ng-container>
 
-        <!-- Motor Type Column -->
+
         <ng-container matColumnDef="motorType">
           <th mat-header-cell *matHeaderCellDef>Motor Type</th>
           <td mat-cell *matCellDef="let element">{{ element.motorType }}</td>
         </ng-container>
 
-        <!-- Row Definitions -->
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
   </div>
 
-  <!-- Pie Chart for engine types -->
-  <!-- ... Other HTML content -->
   <div class="container-fluid main">
     <div class="bar-chart">
       <h2>Conversion Statistics</h2>
@@ -103,7 +96,7 @@
       ></app-bar-chart>
     </div>
 
-    <!-- Bar Chart for Most Picked Engine Type by Gender -->
+
     <div class="pie-chart">
       <h2>Most Picked Engine Type by Gender</h2>
 
@@ -121,15 +114,7 @@
       ></app-pie-chart>
     </div>
   </div>
-  <!-- Bar Chart for Most Picked Engine Type by Gend
-  </div>
-
-  <!-- ... The rest of your existing HTML content -->
-
-  <!-- Bar Chart for colors by age -->
   <div class="bar-chart">
     <h2></h2>
   </div>
-
-  <!-- ... Map for city visitors would go here -->
 </div>

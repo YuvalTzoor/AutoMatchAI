@@ -86,7 +86,7 @@ export class AnalyticsComponent implements OnInit {
         number[],
         string | string[]
       >;
-      this.data3 = this.processHobbiesData(users); // Process and store hobbies data
+      this.data3 = this.processHobbiesData(users);
     });
     let SubmitterCountTemp: number = parseInt(
       localStorage.getItem('SubmitterCount') || '0'
@@ -154,17 +154,17 @@ export class AnalyticsComponent implements OnInit {
     } = {};
     const ageGroups = ['20-29', '30-39', '40-49', '50-59', '60+'];
 
-    // First, ensure that each age group in colorCountsByAgeGroup is initialized to an empty object
+
     ageGroups.forEach((group) => {
       colorCountsByAgeGroup[group] = {};
     });
 
-    // Process each user to increment their favorite color in the correct age group
+
     users.forEach((user) => {
       const age = this.calculateAge(user.birthday);
       let ageGroup = '';
 
-      // Determine the age group based on age
+
       if (age >= 20 && age < 30) {
         ageGroup = '20-29';
       } else if (age >= 30 && age < 40) {
@@ -179,7 +179,6 @@ export class AnalyticsComponent implements OnInit {
 
       if (ageGroup) {
         const color = user.favoriteColor;
-        // Ensure the color key exists in the age group dictionary
         if (!colorCountsByAgeGroup[ageGroup][color]) {
           colorCountsByAgeGroup[ageGroup][color] = 0;
         }
@@ -187,15 +186,15 @@ export class AnalyticsComponent implements OnInit {
       }
     });
 
-    // Create labels and datasets for the chart
+
     const labels = Object.keys(colorCountsByAgeGroup)
       .flatMap((group) => Object.keys(colorCountsByAgeGroup[group]))
-      .filter((value, index, self) => self.indexOf(value) === index); // Ensure unique labels
+      .filter((value, index, self) => self.indexOf(value) === index);
 
     const datasets = ageGroups.map((group) => {
       return {
         label: group,
-        data: labels.map((color) => colorCountsByAgeGroup[group][color] || 0), // Safely access color count or default to 0
+        data: labels.map((color) => colorCountsByAgeGroup[group][color] || 0), 
       };
     });
 
