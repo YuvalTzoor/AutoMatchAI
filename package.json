@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-gh": "ng build --configuration development  --base-href \"https://YuvalTzoor.github.io/AutoMatchAI/\"",
+    "deploy": "ngh --dir=dist/auto-match-ai"
   },
   "private": true,
   "dependencies": {
